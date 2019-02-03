@@ -1,14 +1,15 @@
-RGB = imread('C:\Users\kshi012\Desktop\matlab\DP-2.tif');
-imshow(RGB);
+RGB = imread('1.jpg');
+RGB=rgb2gray(RGB);
+figure,imshow(RGB);
 bw = imbinarize(RGB);
-imshow(bw);
+figure,imshow(bw);
 % remove all object containing fewer than 30 pixels
-bw = bwareaopen(bw,30);
+bw = bwareaopen(~bw,30);
 
 % fill a gap in the pen's cap
 se = strel('disk',2);
 bw = imclose(bw,se);
-
+figure,
 % fill any holes, so that regionprops can be used to estimate
 % the area enclosed by each of the boundaries
 bw = imfill(bw,'holes');
@@ -49,7 +50,7 @@ for k = 1:length(B)
   % mark objects above the threshold with a black circle
   if metric > threshold
     centroid = stats(k).Centroid;
-    plot(centroid(1),centroid(2),'ko');
+    plot(centroid(1),centroid(2),'ko',boundary(43,2), boundary(34,1), 'ro');
   end
   
   text(boundary(1,2)-35,boundary(1,1)+13,metric_string,'Color','y',...
@@ -59,3 +60,4 @@ end
 
 title(['Metrics closer to 1 indicate that ',...
        'the object is approximately round']);
+   
