@@ -1,4 +1,4 @@
-function [R,A]=f2(j,boundary,centroid)
+function [R,A]=f2(j,boundary,centroid)%用f1 中R角度做重建中的theta
 count=0;
 for jj=0:j
 count=count+1;

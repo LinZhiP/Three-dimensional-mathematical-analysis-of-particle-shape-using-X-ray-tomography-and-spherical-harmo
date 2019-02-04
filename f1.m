@@ -2,7 +2,7 @@
 function [aj,bj]=f1(j,boundary,centroid)
 R=zeros(length(boundary(:,1)),2);
 count=0;
-for i=1:length(boundary(:,1))%bwboundaries产生的B第一列是Y第二列是X centroid 1是质心x 2是y
+for i=1:10:length(boundary(:,1))%bwboundaries产生的B第一列是Y第二列是X centroid 1是质心x 2是y
     count=count+1;
     R(count,1)=atan((boundary(count,1)-centroid(2))/(boundary(count,2)-centroid(1)));%theta与x轴的夹角
     if boundary(count,1)<centroid(2)&&boundary(count,2)>centroid(1)%一
@@ -23,6 +23,8 @@ for i=1:length(boundary(:,1))%bwboundaries产生的B第一列是Y第二列是X centroid 1是
 end
 aj=sum(ainted)/(2*pi);
 bj=sum(binted)/(2*pi);
+% aj=trapz(R(1:10:length(boundary(:,1)),1),ainted(:)')/(2*pi);%数值积分
+% bj=trapz(R(1:10:length(boundary(:,1)),1),binted(:)')/(2*pi);
 % clear aj bj count
 % count=0;
 % for j=1:40
@@ -30,5 +32,3 @@ bj=sum(binted)/(2*pi);
 % [aj(count),bj(count)]=f1(j,boundary,centroid);
 % end
 % figure,plot(1:count,aj,'r-.',1:count,bj,'b-');
-% aj=trapz(R(:,1),ainted(:)')/(2*pi);%数值积分
-% bj=trapz(R(:,1),binted(:)')/(2*pi);
