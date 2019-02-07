@@ -1,11 +1,11 @@
-RGB = imread('DP-2.tif');
-% RGB=rgb2gray(RGB);
-% RGB=imresize(RGB,0.5,'bilinear');
+RGB = imread('1.jpg');
+ RGB=rgb2gray(RGB);
+%  RGB=imresize(RGB,0.1,'bilinear');
 figure,imshow(RGB);
 bw = imbinarize(RGB);
 figure,imshow(bw);
 % remove all object containing fewer than 30 pixels
-bw = bwareaopen(bw,30);%目标图像黑色取反
+bw = bwareaopen(~bw,30);%目标图像黑色取反
 
 % fill a gap in the pen's cap
 se = strel('disk',2);
