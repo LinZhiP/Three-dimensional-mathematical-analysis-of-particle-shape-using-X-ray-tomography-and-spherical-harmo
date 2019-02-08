@@ -8,7 +8,7 @@ function [aj,bj]=f1(j,boundary,centroid)
 % bj=sum(binted)/(2*pi);
 aj=trapz(R(1:length(R),1),ainted(:)')/(2*pi);%数值积分
 bj=trapz(R(1:length(R),1),binted(:)')/(2*pi);
-% clear aj bj count
+% clear aj bj count%测试程序显示fig3
 % count=0;
 % for j=1:40
 % count=count+1;

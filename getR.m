@@ -1,26 +1,31 @@
 function [R]=getR(boundary,centroid)
-%R 2距离
-%R 1角度
+%function R(θ)={(θn,Rn)} is the length from the center of mass to the
+%surface at an angle θ，Rn is the length of these line segments
+%getR first coefficients is theta second is length from the mass centroid
+%output R is a n*2 matix which is numerically surface
 R=zeros(ceil(length(boundary(:,1))/1),2);
 % count=0;
-for count=1:1:length(boundary(:,1))%bwboundaries产生的B第一列是Y第二列是X centroid 1是质心x 2是y 可以修改抽样间隔
+for count=1:1:length(boundary(:,1))
+    %boundaries first col is Y second is X centroid first col is X second is  X .
+    %we can chang the second coefficient of loop to sample the surface.
 %     count=count+1;
-    R(count,1)=atan((boundary(count,1)-centroid(2))/(boundary(count,2)-centroid(1)));%theta与x轴的夹角
-    if boundary(count,1)<centroid(2)&&boundary(count,2)>centroid(1)%一
+    R(count,1)=atan((boundary(count,1)-centroid(2))/(boundary(count,2)-centroid(1)));
+    %computed theta is measured counterclockwise from the x-axis.
+    if boundary(count,1)<centroid(2)&&boundary(count,2)>centroid(1)%First quadrant
         R(count,1)=-R(count,1);
     end
-     if boundary(count,1)<=centroid(2)&&boundary(count,2)<centroid(1)%二
+     if boundary(count,1)<=centroid(2)&&boundary(count,2)<centroid(1)%Second quadrant
              R(count,1)=pi-R(count,1);
      end 
-    if boundary(count,1)>centroid(2)&&boundary(count,2)<=centroid(1)%三
+    if boundary(count,1)>centroid(2)&&boundary(count,2)<=centroid(1)%Thrid quadrant
             R(count,1)=pi-R(count,1);
             end
-   if boundary(count,1)>=centroid(2)&&boundary(count,2)>centroid(1)%四象限
+   if boundary(count,1)>=centroid(2)&&boundary(count,2)>centroid(1)%Fourth quadrant
         R(count,1)=2*pi-R(count,1);
         end
-    R(count,2)=sqrt((boundary(count,2)-centroid(1))^2+(boundary(count,1)-centroid(2))^2);%Rn到质心的距离
+    R(count,2)=sqrt((boundary(count,2)-centroid(1))^2+(boundary(count,1)-centroid(2))^2);%Rn length from the center of mass 
 end
-[m,n]=size(R);
+[m,n]=size(R);%when use sampling need delete zero in the R matrix
 m_cal=[];
 mm=1;
 for i=1:m
