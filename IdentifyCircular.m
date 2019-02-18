@@ -1,11 +1,13 @@
-RGB = imread('1.jpg');
- RGB=rgb2gray(RGB);
-%  RGB=imresize(RGB,0.1,'bilinear');
+clear all
+clc
+RGB = imread('DP-2.tif');
+%  RGB=rgb2gray(RGB);
+% RGB=imresize(RGB,0.25,'bilinear');
 figure,imshow(RGB);
 bw = imbinarize(RGB);
 figure,imshow(bw);
 % remove all object containing fewer than 30 pixels
-bw = bwareaopen(~bw,30);%目标图像黑色取反
+bw = bwareaopen(bw,30);%目标图像黑色取反
 
 % fill a gap in the pen's cap
 se = strel('disk',2);
@@ -62,3 +64,19 @@ end
 title(['Metrics closer to 1 indicate that ',...
        'the object is approximately round']);
    
+ clear aj bj count%测试程序显示fig3
+count=0;
+for j=1:40
+count=count+1;
+[aj(count),bj(count)]=f1(j,boundary,centroid);
+end
+figure,plot(1:count,aj,'r-.',1:count,bj,'b-');
+clear A R1 R%测试程序显示Fig4 5
+for j=1:12%j=70:80 perfect
+[R1,A(j+1)]=f2(j,boundary,centroid);
+R=getR(boundary,centroid);
+t=[ceil(R1(:,2).*sin(R1(:,1))+centroid(1)) ceil(R1(:,2).*cos(R1(:,1))+centroid(2))];
+figure,
+plot(centroid(1)+R1(:,2).*sin(R1(:,1)),centroid(2)+R1(:,2).*cos(R1(:,1)),'k.');
+end
+figure,plot([1:12],A(2:13),'r-',[1:12],area.*ones(1,12))
